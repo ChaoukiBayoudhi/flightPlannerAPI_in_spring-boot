@@ -5,10 +5,10 @@ import lombok.*;
 
 @Getter
 @Setter
-@ToString
-@EqualsAndHashCode
-@NoArgsConstructor
-@AllArgsConstructor
+@ToString(exclude = {"logo"})
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@RequiredArgsConstructor //generates a constructor with required fields (final fields and @NonNull fields)
+//@AllArgsConstructor // Because the id is auto generated, we don't need this annotation
 @Table(name = "airlines")
 @Entity
 //in SQL the annotation is translated into
@@ -21,9 +21,12 @@ public class Airline {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer code;
     @NonNull // JPA annotation to specify that a property is not nullable
+    //the column is required and must be unique
     //@Column annotation to specify the column name, length ...
     @Column(unique = true,length = 70,name="airline_name")
+    @EqualsAndHashCode.Include
     private String name;
+    @NonNull
     private String contactInformations;
     private String headQuarters;
     @Lob // JPA annotation to specify that a property will be
@@ -31,4 +34,15 @@ public class Airline {
     // large object type
     private byte[] logo;
     private int fleetSize;
+
+    public Airline() {
+    }
+
+    public Airline(@NonNull String name, @NonNull String contactInformations, String headQuarters, byte[] logo, int fleetSize) {
+        this.name = name;
+        this.contactInformations = contactInformations;
+        this.headQuarters = headQuarters;
+        this.logo = logo;
+        this.fleetSize = fleetSize;
+    }
 }
