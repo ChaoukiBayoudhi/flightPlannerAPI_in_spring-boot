@@ -25,4 +25,9 @@ public class Aircraft {
     private  int range;
     private BigDecimal fuelConsumption;
 
+    //Specify the relationship between Aircraft and Airline (many to 1)
+    @ManyToOne
+    @JoinColumn(name="airline_code")
+    private Airline airline;
+
 }

@@ -17,4 +17,11 @@ public class EmployeeContact {
     //auto increment starts from 1 and increments by 1
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer code;
+    private String phoneNumber;
+    private String mailingAddress;
+    private String email;
+
+    //Specify the relationship between EmployeeContact and Employee (1 to 1)
+    @OneToOne
+    private Employee employee;
 }
