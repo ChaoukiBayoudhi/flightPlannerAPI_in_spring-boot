@@ -22,7 +22,7 @@ public class Seat {
     @Id
     //auto increment starts from 1 and increments by 1
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Short id;
     @Column(name = "seat_number")
     @NonNull
     private int seatNumber;

@@ -1,7 +1,8 @@
 package tn.esb.lmad.flightPlannerAPI.Repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 import tn.esb.lmad.flightPlannerAPI.Domains.Seat;
-
-public interface SeatRepository extends JpaRepository<Seat,Long> {
+@Repository
+public interface SeatRepository extends JpaRepository<Seat,Short> {
 }

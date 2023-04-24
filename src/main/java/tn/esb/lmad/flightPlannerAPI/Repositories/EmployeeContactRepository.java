@@ -1,4 +1,8 @@
 package tn.esb.lmad.flightPlannerAPI.Repositories;
 
-public interface EmployeeContactRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import tn.esb.lmad.flightPlannerAPI.Domains.EmployeeContact;
+@Repository
+public interface EmployeeContactRepository extends JpaRepository<EmployeeContact,Integer> {
 }
