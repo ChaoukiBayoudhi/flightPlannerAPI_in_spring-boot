@@ -18,6 +18,7 @@ import java.math.BigDecimal;
 @Table(name = "aircrafts")
 public class Aircraft {
     @Id // JPA annotation to specify the primary key of an entity
+    @EqualsAndHashCode.Include // to include this field in the equality and hash code calculations
     private String code;
     @Enumerated(EnumType.STRING)
     private AircraftModel model;
