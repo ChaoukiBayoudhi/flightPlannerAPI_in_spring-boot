@@ -57,5 +57,16 @@ public class AircraftService {
             throw new RuntimeException("Aircraft with code "+aircraft.getCode()+" already exists");
         return aircraftRepository.save(aircraft);
     }
+    public Aircraft updateAircraft(String code,Aircraft aircraft){
+        if(!aircraftRepository.existsById(code))
+            throw new RuntimeException("Aircraft with code "+code+" not found");
+        aircraft.setCode(code);
+        return aircraftRepository.save(aircraft);
+    }
+    public void deleteAircraft(String code){
+        if(!aircraftRepository.existsById(code))
+            throw new RuntimeException("Aircraft with code "+code+" not found");
+        aircraftRepository.deleteById(code);
+    }
 
 }

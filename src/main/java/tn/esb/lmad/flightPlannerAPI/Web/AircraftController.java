@@ -8,6 +8,7 @@ import tn.esb.lmad.flightPlannerAPI.Services.AircraftService;
 
 import java.util.List;
 import java.util.Optional;
+@CrossOrigin(origins = {"http://localhost:4200","http://localhost:49430"})
 
 @RestController
 //this class is the boundary of our architecture ECB (Entity Control Boundary)
@@ -83,5 +84,13 @@ public class AircraftController {
     //if not then the request is transmitted to the service.
     public Aircraft addOneAircraft(@Valid  @RequestBody Aircraft aircraft){
         return aircraftService.addAircraft(aircraft);
+    }
+    @PutMapping("/update/{code}")
+    public Aircraft updateOneAircraft(@PathVariable String code,@Valid @RequestBody Aircraft aircraft){
+        return aircraftService.updateAircraft(code,aircraft);
+    }
+    @DeleteMapping("/delete/{code}")
+    public void deleteOneAircraft(@PathVariable String code){
+        aircraftService.deleteAircraft(code);
     }
 }
