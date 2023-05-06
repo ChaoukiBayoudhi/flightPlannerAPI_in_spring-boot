@@ -2,6 +2,8 @@ package tn.esb.lmad.flightPlannerAPI.Domains;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import lombok.*;
 import tn.esb.lmad.flightPlannerAPI.Enumerations.FlightStatus;
 
@@ -31,6 +33,8 @@ public class Flight {
     private LocalDateTime departureDateTime;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime arrivalDateTime;
+    @Min(0) //the price must be positive
+    @Max(1000)//the price must be less than 1000
     private BigDecimal price;
     private float duration;
     private boolean isDirect;

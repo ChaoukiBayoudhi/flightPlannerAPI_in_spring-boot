@@ -25,8 +25,7 @@ public class Passenger{
     @Email //this annotation will check if the email is valid
     //the string email is introduced like '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}'
     private String email;
-    @Min(13)
-    @Max(18)
+    @Column(length = 18)
     private String phoneNumber;
     private String Nationality;
     private String passportNumber;

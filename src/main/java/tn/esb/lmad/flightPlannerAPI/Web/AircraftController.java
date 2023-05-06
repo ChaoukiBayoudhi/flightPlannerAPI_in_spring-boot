@@ -1,6 +1,13 @@
 package tn.esb.lmad.flightPlannerAPI.Web;
 
-import org.springframework.web.bind.annotation.RestController;
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import tn.esb.lmad.flightPlannerAPI.Domains.Aircraft;
+import tn.esb.lmad.flightPlannerAPI.Services.AircraftService;
+
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 //this class is the boundary of our architecture ECB (Entity Control Boundary)
@@ -36,6 +43,45 @@ import org.springframework.web.bind.annotation.RestController;
 //spring boot uses the @PathVariable annotation to get the path variable from the request
 
 // for the data format we use annotations like @JsonFormat, @JsonIdentityInfo, @JsonIgnore, @JsonProperty
+@RequestMapping("/aircraft")
+//the line below add /aircraft to the path of all the endpoints of this controller
 public class AircraftController {
-
+    //the controller will call the service layer
+    private final AircraftService aircraftService;
+    @Autowired
+    public AircraftController(AircraftService aircraftService) {
+        this.aircraftService = aircraftService;
+    }
+    //list all aircraft
+    //url=http://localhost:9995/aircrafact/all
+    @GetMapping("/all")
+    public List<Aircraft> getAircraft(){
+        return aircraftService.getAllAircraft();
+    }
+    //get an aircraft by its code
+    //to get the aircraft having the code A1
+    //the url=http://localhost:9995/aircrafact/A1
+    //to get the aircraft having the code A2
+    //the url=http://localhost:9995/aircrafact/A2
+    //@GetMapping("/code") //==> the url is http://localhost:9995/aircrafact/code
+    @GetMapping("/{code}")
+    //{code} means that the code value is a variable
+    //Adding the annotation @PathVariable means that the code value
+    //will be taken from the path of the request
+    public Optional<Aircraft> getAircraft(@PathVariable String code){
+        return aircraftService.getAircraftByCode(code);
+    }
+    //add an aircraft
+    @PostMapping("/add")
+    //the annotation @RequestBody means that the aircraft object
+    //will be taken from the body of the request
+    //@Valid annotation means that the aircraft object will be validated
+    //Using @Valid annotation spring-boot will verify if the given object
+    //is satisfying constraints defined in the Aircraft domain class like @Email, max length, min length
+    //date and time format, fields type,...
+    //if the parameter is not valid then the request is rejected
+    //if not then the request is transmitted to the service.
+    public Aircraft addOneAircraft(@Valid  @RequestBody Aircraft aircraft){
+        return aircraftService.addAircraft(aircraft);
+    }
 }

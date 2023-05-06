@@ -29,7 +29,7 @@ public class AircraftService {
     //implentation of the business logic of the application
     //implementation of the CRUD operations
     //get all aricrafts
-    public List<Aircraft> getAllAircrafts(){
+    public List<Aircraft> getAllAircraft(){
         return aircraftRepository.findAll();
     }
     //get an aircraft by its code
