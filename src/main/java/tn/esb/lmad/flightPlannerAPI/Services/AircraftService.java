@@ -1,7 +1,10 @@
 package tn.esb.lmad.flightPlannerAPI.Services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.function.EntityResponse;
 import tn.esb.lmad.flightPlannerAPI.Domains.Aircraft;
 import tn.esb.lmad.flightPlannerAPI.Repositories.AircraftRepository;
 
@@ -29,8 +32,11 @@ public class AircraftService {
     //implentation of the business logic of the application
     //implementation of the CRUD operations
     //get all aricrafts
-    public List<Aircraft> getAllAircraft(){
-        return aircraftRepository.findAll();
+    public ResponseEntity<List<Aircraft>> getAllAircraft(){
+        List<Aircraft> aircraft=aircraftRepository.findAll();
+        if(aircraft.isEmpty())
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(aircraft);
+        return  ResponseEntity.status(HttpStatus.OK).body(aircraft);
     }
     //get an aircraft by its code
     //findById() method returns an Optional<Aircraft> object
@@ -52,10 +58,10 @@ public class AircraftService {
     //    return aircraftRepository.findById(code).orElseThrow(()->new RuntimeException("Aircraft with code "+code+" not found"));
     //}
     //add an aircraft
-    public Aircraft addAircraft(Aircraft aircraft){
+    public ResponseEntity<?> addAircraft(Aircraft aircraft){
         if(aircraftRepository.existsById(aircraft.getCode()))
-            throw new RuntimeException("Aircraft with code "+aircraft.getCode()+" already exists");
-        return aircraftRepository.save(aircraft);
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("The aircraft with code "+aircraft.getCode()+" already exists");
+        return ResponseEntity.status(HttpStatus.CREATED).body(aircraft);
     }
     public Aircraft updateAircraft(String code,Aircraft aircraft){
         if(!aircraftRepository.existsById(code))

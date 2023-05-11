@@ -2,6 +2,7 @@ package tn.esb.lmad.flightPlannerAPI.Web;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.esb.lmad.flightPlannerAPI.Domains.Aircraft;
 import tn.esb.lmad.flightPlannerAPI.Services.AircraftService;
@@ -56,7 +57,7 @@ public class AircraftController {
     //list all aircraft
     //url=http://localhost:9995/aircrafact/all
     @GetMapping("/all")
-    public List<Aircraft> getAircraft(){
+    public ResponseEntity<List<Aircraft>> getAircraft(){
         return aircraftService.getAllAircraft();
     }
     //get an aircraft by its code
@@ -82,7 +83,7 @@ public class AircraftController {
     //date and time format, fields type,...
     //if the parameter is not valid then the request is rejected
     //if not then the request is transmitted to the service.
-    public Aircraft addOneAircraft(@Valid  @RequestBody Aircraft aircraft){
+    public ResponseEntity<?> addOneAircraft(@Valid  @RequestBody Aircraft aircraft){
         return aircraftService.addAircraft(aircraft);
     }
     @PutMapping("/update/{code}")
